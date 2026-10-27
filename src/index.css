@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+/* -------------------------------------------------------------------------- */
+/* AgriSphere design system                                                    */
+/* The emerald and slate scales are re-tuned so every module picks up the      */
+/* brand palette: a natural forest green and warm "field paper" neutrals.      */
+/* -------------------------------------------------------------------------- */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Forest green (brand) */
+  --color-emerald-50: #f1f6ee;
+  --color-emerald-100: #dfebd8;
+  --color-emerald-200: #bed6b1;
+  --color-emerald-300: #94ba83;
+  --color-emerald-400: #6a9c59;
+  --color-emerald-500: #4a7f3c;
+  --color-emerald-600: #3a6830;
+  --color-emerald-700: #2f5427;
+  --color-emerald-800: #264321;
+  --color-emerald-900: #1e361b;
+  --color-emerald-950: #0f1f0e;
+
+  /* Warm neutrals */
+  --color-slate-50: #f8f7f3;
+  --color-slate-100: #f0eee7;
+  --color-slate-150: #e9e6dd;
+  --color-slate-200: #e3e0d6;
+  --color-slate-300: #cdc8ba;
+  --color-slate-400: #a29c8c;
+  --color-slate-500: #7a7466;
+  --color-slate-600: #5d584c;
+  --color-slate-700: #464237;
+  --color-slate-800: #2e2b24;
+  --color-slate-850: #25231d;
+  --color-slate-900: #1f1d18;
+  --color-slate-950: #12110e;
+
+  /* Accents */
+  --color-harvest-50: #fdf6e3;
+  --color-harvest-100: #faeac0;
+  --color-harvest-400: #e0b13d;
+  --color-harvest-500: #c8901a;
+  --color-harvest-600: #a87413;
+  --color-soil-500: #8a5a3b;
+
+  --radius-xl: 0.8rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.4rem;
+
+  --shadow-sm: 0 1px 2px 0 rgb(31 29 24 / 0.05), 0 1px 1px 0 rgb(31 29 24 / 0.03);
+  --shadow-md: 0 4px 14px -4px rgb(31 29 24 / 0.1), 0 2px 4px -2px rgb(31 29 24 / 0.05);
+  --shadow-lg: 0 12px 32px -10px rgb(31 29 24 / 0.16);
+  --shadow-xl: 0 20px 44px -14px rgb(31 29 24 / 0.2);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--color-slate-50);
+    color: var(--color-slate-800);
+    font-feature-settings: "cv11", "ss01";
+  }
+  /* Editorial serif for page and section titles */
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 600 !important;
+    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 72;
+  }
+  ::selection {
+    background: var(--color-emerald-200);
+    color: var(--color-emerald-950);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-emerald-500);
+    outline-offset: 2px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-slate-300) transparent;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Motion utilities                                                           */
+/* -------------------------------------------------------------------------- */
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float-blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.12); }
+  66% { transform: translate(-30px, 25px) scale(0.92); }
+}
+
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes sheen {
+  from { transform: translateX(-120%) skewX(-20deg); }
+  to { transform: translateX(220%) skewX(-20deg); }
+}
+
+@keyframes draw-in {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Staggers the top-level sections of every module page as it opens */
+.stagger-in > * > * {
+  animation: rise-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger-in > * > *:nth-child(1) { animation-delay: 0.03s; }
+.stagger-in > * > *:nth-child(2) { animation-delay: 0.08s; }
+.stagger-in > * > *:nth-child(3) { animation-delay: 0.13s; }
+.stagger-in > * > *:nth-child(4) { animation-delay: 0.18s; }
+.stagger-in > * > *:nth-child(5) { animation-delay: 0.23s; }
+.stagger-in > * > *:nth-child(n + 6) { animation-delay: 0.28s; }
+
+/* Gentle lift on cards inside modules (only where a real pointer can hover, so it never sticks on touch) */
+.stagger-in .rounded-2xl.border {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .stagger-in .rounded-2xl.border:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Small screens & touch                                                       */
+/* -------------------------------------------------------------------------- */
+
+/* 16px form text on phones stops iOS Safari from zooming in when a field is focused */
+@media (max-width: 640px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Comfortable tap targets on touch screens */
+@media (pointer: coarse) {
+  button,
+  [role="button"],
+  a,
+  select {
+    touch-action: manipulation;
+  }
+}
+
+/* Keep content clear of notches and the home indicator */
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Wide tables and code blocks scroll inside their card instead of the page */
+.stagger-in table {
+  min-width: 100%;
+}
+.stagger-in pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Custom icons draw their strokes in once when mounted */
+.icon-draw path,
+.icon-draw circle,
+.icon-draw rect,
+.icon-draw line,
+.icon-draw polyline {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.icon-draw.animate path,
+.icon-draw.animate circle,
+.icon-draw.animate rect,
+.icon-draw.animate line,
+.icon-draw.animate polyline {
+  animation: draw-in 0.7s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.blob {
+  animation: float-blob 16s ease-in-out infinite;
+}
+
+.text-shimmer {
+  background-image: linear-gradient(90deg, #bed6b1, #e0b13d, #94ba83, #bed6b1);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 6s linear infinite;
+}
+
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.sheen {
+  position: relative;
+  overflow: hidden;
+}
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.35), transparent);
+  animation: sheen 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Subtle field-row texture used on dark brand panels */
+.field-rows {
+  background-image: repeating-linear-gradient(
+    -24deg,
+    rgb(255 255 255 / 0.035) 0 1px,
+    transparent 1px 14px
+  );
+}
+
+/* Paper grain for light hero areas */
+.paper-grid {
+  background-image:
+    linear-gradient(rgb(31 29 24 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(31 29 24 / 0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-in > * > *,
+  .blob,
+  .text-shimmer,
+  .marquee-track,
+  .sheen::after,
+  .icon-draw.animate * {
+    animation: none !important;
+  }
+}

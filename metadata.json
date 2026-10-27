@@ -1,0 +1,6 @@
+{
+  "name": "AgriSphere",
+  "description": "AI Smart Agriculture Platform for crop recommendations, disease detection, farm management, smart irrigation, and marketplace trading.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
